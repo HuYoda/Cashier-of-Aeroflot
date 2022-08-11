@@ -1,0 +1,88 @@
+create table Airlines(
+	airline_id int,
+	airline_name varchar(32) not null,
+	constraint airline_pk primary key(airline_id),
+	constraint airline_uk1 unique(airline_name)
+);
+create table Planes(
+	plane_id int,
+	plane_name varchar(32),
+	plane_mark varchar(32) not null,
+	airline_id int,
+	constraint plane_pk primary key(plane_id),
+	constraint plane_fk1 foreign key(airline_id) references Airlines(airline_id) on update cascade on delete cascade,
+	constraint plane_uk1 unique(plane_name)
+);
+create table Departures(
+	departure_id int,
+	departure_city varchar(32) not null,
+	departure timestamp not null,
+	constraint departure_pk primary key(departure_id)
+);
+create table Arrivals(
+	arrival_id int,
+	arrival_city varchar(32) not null,
+	arrival timestamp not null,
+	constraint arrival_pk primary key(arrival_id)
+);
+create table Flights(
+	flight_id int,
+	departure_id int,
+	arrival_id int,
+	flight_time interval not null,
+	airline_id int,
+	plane_id int,
+	constraint flight_pk primary key(flight_id),
+	constraint flight_fk1 foreign key(airline_id) references Airlines(airline_id) on update cascade on delete cascade,
+	constraint flight_fk2 foreign key(plane_id) references Planes(plane_id) on update cascade on delete cascade,
+	constraint flight_fk3 foreign key(arrival_id) references Arrivals(arrival_id) on update cascade on delete cascade,
+	constraint flight_fk4 foreign key(departure_id) references Departures(departure_id) on update cascade on delete cascade
+);
+create table Seats(
+	seat_id int,
+	class_type varchar(32) not null,
+	occupancy bool not null,
+	plane_id int,
+	constraint seat_pk primary key(seat_id),
+	constraint seat_fk1 foreign key(plane_id) references Planes(plane_id) on update cascade on delete cascade
+);
+create table Passengers(
+	passenger_id int,
+	passenger_lname varchar(32) not null,
+	passenger_fname varchar(32) not null,
+	passenger_age int not null,
+	hand_luggage bool not null,
+	luggage bool not null,
+	flight_id int,
+	constraint passenger_pk primary key(passenger_id),
+	constraint passenger_fk1 foreign key(flight_id) references Flights(flight_id) on update cascade on delete cascade
+);
+create table Tickets(
+	ticket_id int,
+	age_type varchar(32) not null,
+	reservation_date date,
+	issue_date date not null,
+	flight_id int,
+	passenger_id int,
+	seat_id int,
+	constraint ticket_pk primary key(ticket_id),
+	constraint ticket_fk1 foreign key(flight_id) references Flights(flight_id) on update cascade on delete cascade,
+	constraint ticket_fk2 foreign key(passenger_id) references Passengers(passenger_id) on update cascade on delete cascade,
+	constraint ticket_fk3 foreign key(seat_id) references Seats(seat_id) on update cascade on delete cascade
+);
+create table Schedule(
+	schedule_id int,
+	flight_id int,
+	departure_id int,
+	arrival_id int,
+	airline_id int,
+	constraint schedule_pk primary key(schedule_id),
+	constraint schedule_fk1 foreign key(flight_id) references Flights(flight_id) on update cascade on delete cascade,
+	constraint schedule_fk2 foreign key(departure_id) references Departures(departure_id) on update cascade on delete cascade,
+	constraint schedule_fk3 foreign key(arrival_id) references Arrivals(arrival_id) on update cascade on delete cascade,
+	constraint schedule_fk4 foreign key(airline_id) references Airlines(airline_id) on update cascade on delete cascade
+);
+alter table Tickets add column price int;
+alter table Airlines drop constraint airline_uk1;
+alter table Airlines add constraint airline_uk1 unique(airline_name); 
+alter table Tickets drop column price;

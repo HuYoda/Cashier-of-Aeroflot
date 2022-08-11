@@ -1,0 +1,56 @@
+insert into Airlines(airline_id, airline_name) values
+(4, 'Quantum Air'),
+(5, 'Eminent Airlines'),
+(7, 'Gojets Airline'),
+(11, 'Osprey');
+insert into Planes(plane_id, plane_name, plane_mark, airline_id) values
+(23, 'Skynova', 'Airbus A300', 7),
+(16, 'Shadowfreak', 'Boeing 787 Dreamliner', 11),
+(30, null, 'Airbus A330', 4),
+(7, 'Diligent Mosquito', 'Boeing 787 Dreamliner', 11);
+insert into Departures(departure_id, departure_city, departure) values
+(275, 'Sao Joao de Meriti', '2019-12-14 14:00:00'),
+(234, 'Wokingham', '2019-12-07 12:45:00'),
+(156, 'Sargodha', '2020-01-03 08:30:00'),
+(157, 'Tuxtla Gutierrez', '2019-12-27 23:00:00');
+insert into Arrivals(arrival_id, arrival_city, arrival) values
+(275, 'Cheboksary', '2019-12-15 06:00:00'),
+(234, 'Rugao', '2019-12-07 21:30:00'),
+(156, 'Otsu', '2020-01-03 12:15:00'),
+(157, 'Vigo', '2019-12-28 08:00:00');
+insert into Flights
+(flight_id, departure_id, arrival_id, flight_time, airline_id, plane_id) values
+(46, 234, 234, '0 days 08:45:00', 11, 7),
+(75, 275, 275, '0 days 16:00:00', 11, 16),
+(14, 156, 156, '0 days 03:45:00', 4, 30),
+(32, 157, 157, '0 days 09:00:00', 7, 7);
+insert into Seats(seat_id, class_type, occupancy, price, plane_id) values
+(732, 'business', true, 105, 7),
+(745, 'economy', true, 87, 7),
+(1603, 'first', true, 122, 16),
+(3007, 'business',true, 108, 30);
+insert into Passengers
+(passenger_id, passenger_lname, passenger_fname, passenger_age,
+hand_luggage, luggage, flight_id) values
+(32, 'Braelyn', 'Wilkins', 27, true, false, 46),
+(14, 'Alicia', 'Holmes', 22, true, true, 14),
+(56, 'Elliot', 'Willis', 30, false, true, 75),
+(30, 'Mitchell', 'Hendrix', 25, true, true, 32);
+insert into Tickets
+(ticket_id, age_type, reservation_date, issue_date, 
+passenger_id, seat_id, flight_id) values
+(47, 'adult', null, '2019-12-01', 32, 732, 46),
+(150, 'adult', '2019-12-03', '2019-12-03', 14, 3007, 14),
+(78, 'adult', null, '2019-11-27', 56, 1603, 75),
+(56, 'adult', null, '2019-12-10', 30, 745, 32);
+insert into Schedule(schedule_id, flight_id, departure_id, arrival_id, airline_id) values
+(12, 46, 234, 234, 11),
+(13, 75, 275, 275, 11),
+(14, 14, 156, 156, 4),
+(15, 32, 157, 157, 7);
+update Departures set departure_city = 'Tuxtla Gutierrez' where departure_id = 157;
+delete from Tickets where reservation_date = '2019-12-03';
+insert into Tickets
+(ticket_id, age_type, reservation_date, issue_date, 
+passenger_id, seat_id, flight_id) values 
+(150, 'adult', '2019-12-03', '2019-12-03', 14, 3007, 14);
