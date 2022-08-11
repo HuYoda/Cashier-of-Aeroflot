@@ -1,1 +1,2 @@
 # Cashier-of-Aeroflot
+My first SQL project where I learned all the basics of database. There are entries which I've ran to create the database which represents the cashier of aeroflot. Database contains informations about passangers, seats, planes, airlines and else. All the tabless are connected as I decided they should be and ERD displays the connections between tables. Also there are few insert commands and queries, which I've done for practice.
